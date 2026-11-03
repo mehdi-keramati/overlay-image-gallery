@@ -24,7 +24,7 @@
     "*.css"
   ],
   "engines": {
-    "node": ">=18.17.1"
+    "node": ">=20.19.0"
   },
   "keywords": [
     "overlay-image-gallery",
@@ -49,12 +49,12 @@
   "scripts": {
     "dev": "vite --port 3000",
     "build": "npm run build:lib && npm run build:demo",
-    "build:lib": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && rollup -c",
+    "build:lib": "tsc -p tsconfig.types.json && rollup -c",
     "build:demo": "vite build",
     "prepare": "npm run build:lib",
     "predeploy": "npm run build:demo",
     "deploy": "gh-pages -d demo-dist",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --max-warnings 0"
   },
   "repository": {
     "type": "git",
@@ -65,21 +65,23 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@eslint/js": "^9.39.5",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.3.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
-    "@typescript-eslint/parser": "^7.13.1",
-    "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
-    "gh-pages": "^6.1.1",
+    "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^6.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "gh-pages": "^6.3.0",
+    "globals": "^16.5.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.36.0",
+    "tslib": "^2.9.1",
     "typescript": "^5.2.2",
-    "vite": "^5.3.1"
+    "typescript-eslint": "^8.72.1",
+    "vite": "^7.3.7"
   }
 }

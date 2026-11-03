@@ -319,10 +319,16 @@ const Lightbox = ({ images, initialIndex, showThumbnails = true, zoom = true, lo
                     requestClose();
                     break;
                 case "ArrowLeft":
-                    rtl ? go(1) : go(-1);
+                    if (rtl)
+                        go(1);
+                    else
+                        go(-1);
                     break;
                 case "ArrowRight":
-                    rtl ? go(-1) : go(1);
+                    if (rtl)
+                        go(-1);
+                    else
+                        go(1);
                     break;
                 case "Home":
                     if (!loop)
