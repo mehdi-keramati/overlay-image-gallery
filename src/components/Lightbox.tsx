@@ -247,10 +247,12 @@ const Lightbox = ({
           requestClose();
           break;
         case "ArrowLeft":
-          rtl ? go(1) : go(-1);
+          if (rtl) go(1);
+          else go(-1);
           break;
         case "ArrowRight":
-          rtl ? go(-1) : go(1);
+          if (rtl) go(-1);
+          else go(1);
           break;
         case "Home":
           if (!loop) setIndex(0);
