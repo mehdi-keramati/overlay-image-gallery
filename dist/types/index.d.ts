@@ -1,29 +1,5 @@
-type BaseImageGalleryProps = {
-    images: string[];
-    grid: "v1" | "v2";
-};
-type FullScreenProps = {
-    fullScreen: true;
-    width?: never;
-    height?: never;
-};
-type NonFullScreenProps = {
-    fullScreen?: false;
-    width: number;
-    height: number;
-};
-export type ImageGalleryProps = BaseImageGalleryProps & (FullScreenProps | NonFullScreenProps);
-export type AlbumModalProps = {
-    images: string[];
-    onClose: () => void;
-    selectedImageIndex: number;
-};
-export type SingleImageModalProps = {
-    images: string[];
-    currentIndex: number;
-    onClose: () => void;
-    onPrev: () => void;
-    onNext: () => void;
-    onThumbnailClick?: (index: number) => void;
-};
-export {};
+export { default as OverlayGallery } from "./components/OverlayGallery";
+export { default as Lightbox } from "./components/Lightbox";
+/** @deprecated Use `OverlayGallery` instead. */
+export { default as ImageGallery } from "./components/OverlayGallery";
+export type { GalleryImage, GalleryItem, GridVariant, FitMode, OverlayGalleryProps, ImageGalleryProps, } from "./types";

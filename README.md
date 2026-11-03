@@ -4,17 +4,24 @@
 [![Download Count](http://img.shields.io/npm/dm/overlay-image-gallery.svg?style=flat)](https://www.npmjs.com/package/overlay-image-gallery)
 [![Bundle size](https://badgen.net/bundlephobia/minzip/overlay-image-gallery)](https://bundlephobia.com/package/overlay-image-gallery)
 
-###### Overlay Image Gallery is a versatile React component designed for creating stunning image galleries and carousels effortlessly.
+###### A lightweight, animated React image gallery with a full-featured lightbox — zero runtime dependencies beyond React.
 
-## Preview
+## Highlights
 
-![Preview](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnhyODN6YWYwMTNxeGF6aXB3enJ0YW1xZjI5aTF2djg2cDV0OWw4YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/z2O8LoBk5LZqLuSI5j/giphy.gif)
+- **Three grid variants** — `mosaic`, `featured`, `uniform` — with staggered entrance animations, hover shine and caption reveals.
+- **Cinematic lightbox** — blurred veil, spring-eased transitions, portal rendering, exit animations.
+- **Fluid gestures** — 1:1 drag-to-swipe with velocity snapping, swipe-down-to-dismiss, edge resistance.
+- **Zoom** — double-click/double-tap, pinch on touch, scroll-wheel zoom, pan with clamping.
+- **Keyboard accessible** — `←`/`→` navigate, `Esc` closes, `Home`/`End` jump, focus is trapped and restored.
+- **Thumbnails** — auto-scrolling strip with active indicator.
+- **Fullscreen & download** buttons, animated autoplay progress bar, image captions.
+- **Lightweight** — no animation or slider libraries; CSS transforms and pointer events only.
+- **Theming** — every color, radius and easing is a `--oig-*` CSS custom property.
+- **Respectful** — `prefers-reduced-motion` supported, lazy loading, SSR-safe.
 
 [`Live Demo`](https://b-owl.github.io/overlay-image-gallery/)
 
 ## Installation
-
-To get started, install the package using npm or yarn:
 
 ```bash
 npm install overlay-image-gallery
@@ -28,39 +35,89 @@ yarn add overlay-image-gallery
 
 ## Usage
 
-Here's a quick example of how to use the ImageGallery component in your React application:
+```jsx
+import { OverlayGallery } from "overlay-image-gallery";
 
-```js
-import { ImageGallery } from "overlay-image-gallery";
 const App = () => {
   const images = [
-    "https://example.com/image1.jpg",
-    "https://example.com/image2.jpg",
-    "https://example.com/image3.jpg",
+    { src: "https://example.com/beach.jpg", alt: "A beach", caption: "Beach day", category: "Nature" },
+    { src: "https://example.com/forest.jpg", alt: "A forest", caption: "Pine hollow", category: "Nature" },
+    { src: "https://example.com/tower.jpg", alt: "A skyline", caption: "Downtown", category: "City" },
+    "https://example.com/road.jpg", // plain URLs work too
   ];
 
-  return <ImageGallery images={images} width={800} height={600} grid="v1" />;
+  return (
+    <OverlayGallery
+      images={images}
+      variant="mosaic"
+      fitMode="cover"
+      title="Travel journal"
+      subtitle="Two weeks on the road, in fifteen frames."
+      showFilters
+    />
+  );
 };
 
 export default App;
 ```
 
+The component ships **zero chrome**: a header and category filter bar are rendered
+only when you pass `title`/`subtitle`/`showFilters`. Everything on screen is a prop.
+
 ## Props
 
-| **Prop**     | **Type**    | **Description**                                                               |
-| ------------ | ----------- | ----------------------------------------------------------------------------- |
-| `images`     | Array       | **(Required)** Array of image URLs.                                           |
-| `width`      | Number (px) | Width of the gallery, e.g., width={600}.                                      |
-| `height`     | Number (px) | Height of the gallery, e.g., height={600}.                                    |
-| `grid`       | String      | Layout style, default is `v1`. Options are `v1` and `v2`.                     |
-| `fullScreen` | Boolean     | **(Optional)** If true, the gallery will occupy full screen width and height. |
+| Prop                | Type                      | Default     | Description                                                       |
+| ------------------- | ------------------------- | ----------- | ----------------------------------------------------------------- |
+| `images`            | `Array<string \| object>` | —           | **(Required)** Image URLs or `{ src, alt, caption, category }` objects. |
+| `variant`           | `"mosaic" \| "featured" \| "uniform"` | `"mosaic"` | Grid layout style.                                           |
+| `fitMode`           | `"contain" \| "cover" \| "fill" \| "none" \| "scale-down"` | `"cover"` | CSS `object-fit` for grid tiles.               |
+| `maxTiles`          | Number                    | `10`        | Maximum tiles shown before a `+N` overlay appears.                |
+| `fullScreen`        | Boolean                   | `false`     | Stretch the grid to fill its container.                           |
+| `width` / `height`  | Number (px)               | —           | Fixed grid size when not full-screen.                             |
+| `title`             | `ReactNode`               | —           | Header heading above the grid; renders only when provided.        |
+| `subtitle`          | `ReactNode`               | —           | Header line under the title; renders only when provided.          |
+| `actions`           | `ReactNode`               | —           | Slot beside the header (buttons, links); renders only when provided. |
+| `showFilters`       | Boolean                   | `false`     | Show category filter chips (needs ≥ 2 distinct `category` values). |
+| `defaultCategory`   | String                    | `"all"`     | Category selected initially.                                      |
+| `allLabel`          | String                    | `"All"`     | Label of the "show everything" chip (for i18n).                   |
+| `showThumbnails`    | Boolean                   | `true`      | Show the thumbnail strip inside the lightbox.                     |
+| `zoom`              | Boolean                   | `true`      | Enable zoom gestures and the zoom button.                         |
+| `loop`              | Boolean                   | `true`      | Wrap navigation at both ends.                                     |
+| `autoplay`          | Boolean                   | `false`     | Advance automatically with a progress bar.                        |
+| `autoplayInterval`  | Number (ms)               | `4000`      | Time per slide when autoplay is on.                               |
+| `className`         | String                    | —           | Extra class on the root element.                                  |
+| `onOpen`            | `(index) => void`         | —           | Fired when the lightbox opens.                                    |
+| `onClose`           | `() => void`              | —           | Fired when the lightbox closes.                                   |
+| `onIndexChange`     | `(index) => void`         | —           | Fired when the active image changes.                              |
+| `onFilterChange`    | `(category) => void`      | —           | Fired when a category filter is selected.                         |
 
-## Contributing
+## Theming
 
-We welcome contributions! When making a pull request, please focus on a specific issue. Avoid combining multiple changes in one PR. Describe your feature or implementation clearly. For major changes or if you're unsure about the usefulness of a change, please open an issue first to discuss it.
+Override the CSS custom properties on any ancestor (or the root `.oig` element):
 
-- Follow eslint provided
-- Write [clean](https://github.com/ryanmcdermott/clean-code-javascript) code
+```css
+.my-gallery {
+  --oig-accent: #e0653a;
+  --oig-radius: 20px;
+  --oig-gap: 12px;
+}
+```
+
+| Token              | Purpose                                |
+| ------------------ | -------------------------------------- |
+| `--oig-accent`     | Accent color (focus rings, progress)   |
+| `--oig-veil`       | Lightbox backdrop color                |
+| `--oig-radius`     | Tile and image corner radius           |
+| `--oig-gap`        | Grid gap                               |
+| `--oig-ease`       | Signature easing curve                 |
+| `--oig-shadow`     | Image shadow inside the lightbox       |
+
+## Accessibility
+
+The gallery ships with WCAG-minded defaults: tiles are real buttons, the lightbox is a
+labelled `role="dialog"` with `aria-modal`, focus is trapped while open and restored on
+close, the counter is announced via `aria-live`, and every animation collapses under
+`prefers-reduced-motion: reduce`.
 
 ## Running Locally
 
@@ -72,6 +129,13 @@ npm run dev
 ```
 
 Then open [`localhost:3000`](http://localhost:3000) in a browser.
+
+## Contributing
+
+We welcome contributions! When making a pull request, please focus on a specific issue. Avoid combining multiple changes in one PR. Describe your feature or implementation clearly. For major changes or if you're unsure about the usefulness of a change, please open an issue first to discuss it.
+
+- Follow eslint provided
+- Write [clean](https://github.com/ryanmcdermott/clean-code-javascript) code
 
 ## License
 

@@ -1,0 +1,99 @@
+.oig {
+  --oig-accent: #5b5bd6;
+  --oig-fg: #ffffff;
+  --oig-fg-muted: rgba(255, 255, 255, 0.64);
+  --oig-surface: rgba(255, 255, 255, 0.09);
+  --oig-surface-strong: rgba(255, 255, 255, 0.17);
+  --oig-border: rgba(255, 255, 255, 0.14);
+  --oig-veil: rgba(11, 11, 17, 0.82);
+  --oig-radius: 14px;
+  --oig-radius-sm: 10px;
+  --oig-gap: 8px;
+  --oig-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --oig-ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --oig-shadow: 0 32px 90px -18px rgba(0, 0, 0, 0.6);
+  --oig-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  font-family: var(--oig-font);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.oig,
+.oig *,
+.oig *::before,
+.oig *::after {
+  box-sizing: border-box;
+}
+
+.oig img {
+  display: block;
+  max-width: 100%;
+}
+
+.oig :where(button) {
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.oig :where(a) {
+  color: inherit;
+}
+
+.oig :focus-visible {
+  outline: 2px solid var(--oig-accent);
+  outline-offset: 2px;
+}
+
+.oig-skeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.05) 60%
+  );
+  background-size: 200% 100%;
+  animation: oig-shimmer 1.4s linear infinite;
+}
+
+@keyframes oig-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.oig-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oig *,
+  .oig *::before,
+  .oig *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,42 +1,42 @@
 {
-  "homepage": "https://b-owl.github.io/overlay-image-gallery",
   "name": "overlay-image-gallery",
-  "description": "Overlay Image Gallery is a multi-step image gallery that allows users to click or swipe to navigate between images.",
+  "description": "Overlay Image Gallery is a lightweight, animated React gallery: mosaic grids, a lightbox with zoom, swipe, keyboard navigation, fullscreen and more.",
+  "homepage": "https://b-owl.github.io/overlay-image-gallery",
+  "version": "2.0.0",
   "private": false,
-  "version": "1.0.18",
+  "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
-  "license": "MIT",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/index.esm.js",
       "require": "./dist/index.js",
-      "default": "./dist/index.js",
-      "types": "./dist/types/index.d.ts"
+      "default": "./dist/index.js"
     }
   },
+  "sideEffects": [
+    "*.css"
+  ],
   "engines": {
     "node": ">=18.17.1"
   },
   "keywords": [
     "overlay-image-gallery",
     "image-gallery",
-    "preview-image-gallery",
-    "preview-images",
+    "lightbox",
     "react",
     "nextjs",
     "typescript",
     "drag",
     "react-component",
-    "image-gallery",
-    "video-gallery",
+    "zoom",
     "carousel",
-    "multiple items",
     "slide-show",
     "slider",
     "swipe",
@@ -44,14 +44,16 @@
     "gallery",
     "responsive",
     "mobile-friendly",
-    "tablet-friendly"
+    "accessible"
   ],
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
     "dev": "vite --port 3000",
-    "build": "rollup -c",
-    "prepare": "npm run build",
+    "build": "npm run build:lib && npm run build:demo",
+    "build:lib": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && rollup -c",
+    "build:demo": "vite build",
+    "prepare": "npm run build:lib",
+    "predeploy": "npm run build:demo",
+    "deploy": "gh-pages -d demo-dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "repository": {
@@ -64,9 +66,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-html": "^1.0.3",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-replace": "^5.0.7",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
