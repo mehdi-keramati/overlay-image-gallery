@@ -1,7 +1,7 @@
 {
   "name": "overlay-image-gallery",
   "description": "Overlay Image Gallery is a lightweight, animated React gallery: mosaic grids, a lightbox with zoom, swipe, keyboard navigation, fullscreen and more.",
-  "homepage": "https://b-owl.github.io/overlay-image-gallery",
+  "homepage": "https://mehdi-keramati.github.io/overlay-image-gallery/",
   "version": "2.0.0",
   "private": false,
   "license": "MIT",
