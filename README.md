@@ -19,7 +19,7 @@
 - **Theming** — every color, radius and easing is a `--oig-*` CSS custom property.
 - **Respectful** — `prefers-reduced-motion` supported, lazy loading, SSR-safe.
 
-[`Live Demo`](https://b-owl.github.io/overlay-image-gallery/)
+[`Live Demo`](https://mehdi-keramati.github.io/overlay-image-gallery/)
 
 ## Installation
 
@@ -122,7 +122,7 @@ close, the counter is announced via `aria-live`, and every animation collapses u
 ## Running Locally
 
 ```
-git clone https://github.com/b-owl/overlay-image-gallery.git
+git clone https://github.com/mehdi-keramati/overlay-image-gallery.git
 cd overlay-image-gallery
 npm install
 npm run dev
